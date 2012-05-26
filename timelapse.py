@@ -1,6 +1,21 @@
+"""
+NOTE: many settings in here are specific to the NIKON3000 and will need to be 
+tweaked for other cameras
+
+TODO:
+* slow down interval at night
+* do an image diff between the past few images to see how fast things are
+  changing.  If they are changing slowly, slow down the interval
+"""
+
 from datetime import datetime, timedelta
 import os
 import time
+
+import sun
+
+# the time between photos
+DELTA = timedelta(seconds = 20)
 
 def log(message) :
   print datetime.now(), message
@@ -30,7 +45,10 @@ reset_settings()
 
 while True :
   t = datetime.now()
-  take_picture()
+  
+  # only take pictures when it is light out
+  if sun.is_light(t) :
+    take_picture()
   
   # remove the picture from camera memory since there isn't much there
   delete_picture()
@@ -38,5 +56,5 @@ while True :
   # wait for 1 minute
   # we can't just do sleep(5 * 60) because taking the picture takes time
   print datetime.now(), 'waiting ...'
-  while datetime.now() < t + timedelta(seconds = 20) :
+  while datetime.now() < t + DELTA :
     time.sleep(1)
