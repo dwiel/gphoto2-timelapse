@@ -18,7 +18,7 @@ import sun
 DELTA = timedelta(seconds = 20)
 
 def log(message) :
-  print datetime.now(), message
+  print datetime.utcnow(), message
 
 def run(cmd) :
   log("running %s" % cmd)
@@ -36,7 +36,7 @@ def reset_nikon() :
 
 def take_picture(filename = None) :
   if not filename :
-    filename = datetime.now().strftime("%Y%m%d-%H%M%S.jpg")
+    filename = datetime.utcnow().strftime("%Y%m%d-%H%M%S.jpg")
   
   log('taking picture')
   return run("gphoto2 --capture-image-and-download --filename %s" % filename)
@@ -54,7 +54,7 @@ def reset_settings() :
 reset_settings()
 
 while True :
-  t = datetime.now()
+  t = datetime.utcnow()
   
   # only take pictures when it is light out
   if sun.is_light(t) :
@@ -67,6 +67,6 @@ while True :
   
   # wait for 1 minute
   # we can't just do sleep(5 * 60) because taking the picture takes time
-  print datetime.now(), 'waiting ...'
-  while datetime.now() < t + DELTA :
+  print datetime.utcnow(), 'waiting ...'
+  while datetime.utcnow() < t + DELTA :
     time.sleep(1)
