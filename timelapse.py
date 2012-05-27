@@ -11,6 +11,7 @@ TODO:
 from datetime import datetime, timedelta
 import os
 import time
+import subprocess
 
 import sun
 
@@ -21,9 +22,41 @@ def log(message) :
   print datetime.utcnow(), message
 
 def run(cmd) :
-  log("running %s" % cmd)
-  ret = os.system(cmd)
-  print 'ret', ret
+  reset_nikon()
+  
+  # try running the command once and if it fails, reset_nikon
+  # and then try once more
+  for i in range(2) :
+    log("running %s" % cmd)
+    
+    p = subprocess.Popen(
+      'sudo ' + cmd,
+      shell=True,
+      stdout=subprocess.PIPE,
+      stderr=subprocess.PIPE,
+    )
+    stdout = p.communicate()[1]
+    ret = p.returncode
+    
+    print 'stdout', stdout
+    print 'end stdout'
+    print 'ret', ret
+    
+    if ret == 0 :
+      return ret, stdout
+    elif ret == 1 :
+      if 'No camera found' in stdout :
+        print '#### no camera found'
+        print 'TODO: reboot?'
+        print 'TODO: reset power on camera via GP IO?'
+        return ret, stdout
+      else :
+        # other error like tried to delete a file where there was none, etc
+        return ret, stdout
+    else :
+      reset_nikon()
+  
+  return ret, stdout
 
 def reset_nikon() :
   import os
@@ -44,7 +77,14 @@ def take_picture(filename = None) :
 
 def delete_picture() :
   log('deleting picture')
-  return run("gphoto2 --delete-file=1 --folder=/store_00010001/DCIM/100NIKON")
+  
+  ret, stdout = run("gphoto2 --delete-file=1 --folder=/store_00010001")
+  if 'There are no files in folder' in stdout :
+    ret, stdout = run("gphoto2 --delete-file=1 --folder=/store_00010001/DCIM/100NIKON")
+    if 'There are no files in folder' in stdout :
+      ret, stdout = run("gphoto2 --delete-file=1 --folder=/")
+  
+  return ret
 
 def reset_settings() :
   log('reseting settings')
