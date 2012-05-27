@@ -22,7 +22,17 @@ def log(message) :
 
 def run(cmd) :
   log("running %s" % cmd)
-  return os.system(cmd)
+  ret = os.system(cmd)
+  print 'ret', ret
+
+def reset_nikon() :
+  import os
+  
+  ret = os.popen('lsusb').read()
+  for line in ret.split('\n') :
+    if 'Nikon' not in line : continue
+    
+    return os.system("./usbreset /dev/bus/usb/%s/%s" % (line[4:7], line[15:18]))
 
 def take_picture(filename = None) :
   if not filename :
@@ -48,9 +58,11 @@ while True :
   
   # only take pictures when it is light out
   if sun.is_light(t) :
+    reset_nikon()
     take_picture()
   
   # remove the picture from camera memory since there isn't much there
+  reset_nikon()
   delete_picture()
   
   # wait for 1 minute
