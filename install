@@ -3,3 +3,5 @@
 apt-get install python-setuptools
 
 easy_install pyephem
+
+cc usbreset.c -o usbreset -lusb
