@@ -18,6 +18,7 @@ import sun
 # the time between photos
 #DELTA = timedelta(seconds = 20)
 DELTA = timedelta(minutes = 5)
+folder = 'photos'
 
 def log(message) :
   print datetime.utcnow(), message
@@ -109,12 +110,12 @@ def take_picture(filename = None) :
     run("gphoto2 --capture-image")
     
     # copy the picture from the camera to local disk
-    run("gphoto2 --get-file=1 --filename=%s" % filename)
+    run("gphoto2 --get-file=1 --filename=%s/%s" % (folder, filename))
     
     ## delete file off of camera
     #delete_picture()
   else :
-    return run("gphoto2 --capture-image-and-download --filename %s" % filename)
+    return run("gphoto2 --capture-image-and-download --filename %s/%s" % (folder, filename))
 
 def delete_picture(from_folder = None) :
   log('deleting picture')
@@ -158,3 +159,4 @@ while True :
   print datetime.utcnow(), 'waiting ...'
   while datetime.utcnow() < t + DELTA :
     time.sleep(1)
+
