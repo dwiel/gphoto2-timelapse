@@ -16,7 +16,8 @@ import subprocess
 import sun
 
 # the time between photos
-DELTA = timedelta(seconds = 20)
+#DELTA = timedelta(seconds = 20)
+DELTA = timedelta(minutes = 5)
 
 def log(message) :
   print datetime.utcnow(), message
