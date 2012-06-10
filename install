@@ -1,6 +1,8 @@
 # I've installed this from sources instead
 #apt-get install gphoto2
-apt-get install python-setuptools
+
+apt-get install -qq -y python-setuptools
+apt-get install -qq -y python-dev
 
 easy_install pyephem
 

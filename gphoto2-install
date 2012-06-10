@@ -1,28 +1,35 @@
 #!/bin/bash
 # this will download and install libgphoto2-2.4.14 and libusb-0.1.12
 
+set -e
+
 date > start
 
-cd /home/pi/src
-wget -O libusb-0.1.12.tar.gz http://downloads.sourceforge.net/project/libusb/libusb-0.1%20%28LEGACY%29/0.1.12/libusb-0.1.12.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Flibusb%2Ffiles%2Flibusb-0.1%2520%2528LEGACY%2529%2F0.1.12%2F&ts=1338207956&use_mirror=softlayer
-tar xvf libusb-0.1.12.tar.gz
-cd /home/pi/src/libusb-0.1.12
-sudo make install
+mkdir -p /home/pi/src
+
+#cd /home/pi/src
+#wget -O libusb-0.1.12.tar.gz "http://downloads.sourceforge.net/project/libusb/libusb-0.1%20%28LEGACY%29/0.1.12/libusb-0.1.12.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Flibusb%2Ffiles%2Flibusb-0.1%2520%2528LEGACY%2529%2F0.1.12%2F&ts=1338207956&use_mirror=softlayer"
+#tar xvf libusb-0.1.12.tar.gz
+#cd libusb-0.1.12
+#./configure
+#make
+#sudo make install
+
+sudo apt-get install -qq -y pkg-config
+sudo apt-get install -qq -y libltdl-dev libaa1-dev libjpeg8-dev libreadline-dev libcdk5-dev libpopt-dev libexif-dev
 
 cd /home/pi/src
-wget -O libgphoto2-2.4.14.tar.gz http://downloads.sourceforge.net/project/gphoto/libgphoto/2.4.14/libgphoto2-2.4.14.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fgphoto%2Ffiles%2Flibgphoto%2F2.4.14%2F&ts=1338208130&use_mirror=iweb
-tar xvf libgphoto2-2.4.14.tar.gz
+#wget -O libgphoto2-2.4.14.tar.gz "http://downloads.sourceforge.net/project/gphoto/libgphoto/2.4.14/libgphoto2-2.4.14.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fgphoto%2Ffiles%2Flibgphoto%2F2.4.14%2F&ts=1338208130&use_mirror=iweb"
+#tar xvf libgphoto2-2.4.14.tar.gz
 cd libgphoto2-2.4.14
-make clean
 ./configure
 make
 sudo make install
 
 cd /home/pi/src
-wget -O gphoto2-2.4.14.tar.gz http://downloads.sourceforge.net/project/gphoto/gphoto/2.4.14/gphoto2-2.4.14.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fgphoto%2Ffiles%2Fgphoto%2F2.4.14%2F&ts=1338208164&use_mirror=iweb
+wget -O gphoto2-2.4.14.tar.gz "http://downloads.sourceforge.net/project/gphoto/gphoto/2.4.14/gphoto2-2.4.14.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fgphoto%2Ffiles%2Fgphoto%2F2.4.14%2F&ts=1338208164&use_mirror=iweb"
 tar xvf gphoto2-2.4.14.tar.gz
 cd gphoto2-2.4.14
-make clean
 ./configure
 make
 sudo make install

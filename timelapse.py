@@ -19,6 +19,7 @@ import sun
 #DELTA = timedelta(seconds = 20)
 DELTA = timedelta(minutes = 5)
 folder = 'photos'
+DEBUG = False
 
 def log(message) :
   print datetime.utcnow(), message
@@ -40,16 +41,19 @@ def run(cmd) :
     (stdout, stderr) = p.communicate()
     ret = p.returncode
     
-    print 'stdout', stdout
-    print 'end stdout'
-    print 'stderr', stderr
-    print 'end stderr'
-    print 'ret', ret
+    if stdout.strip() != '' or DEBUG :
+      print 'stdout', stdout
+      print 'end stdout'
+    if stderr.strip() != '' or DEBUG :
+      print 'stderr', stderr
+      print 'end stderr'
+    if DEBUG :
+      print 'ret', ret
     
     if ret == 0 :
       return ret, stdout, stderr
     elif ret == 1 :
-      if 'No camera found' in stdout :
+      if 'No camera found' in stderr :
         print '#### no camera found'
         print 'TODO: reboot?'
         print 'TODO: reset power on camera via GP IO?'
@@ -63,13 +67,17 @@ def run(cmd) :
   return ret, stdout, stderr
 
 def reset_nikon() :
+  log('reset usb')
+  
   import os
   
   ret = os.popen('lsusb').read()
   for line in ret.split('\n') :
     if 'Nikon' not in line : continue
     
-    return os.system("./usbreset /dev/bus/usb/%s/%s" % (line[4:7], line[15:18]))
+    ret = os.popen("./usbreset /dev/bus/usb/%s/%s" % (line[4:7], line[15:18])).read()
+    if 'successful' not in ret :
+      print 'ret', ret
 
 import re
 
