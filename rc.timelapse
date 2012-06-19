@@ -1,21 +1,19 @@
 #!/bin/bash
-WD=$(dirname $0)
-WD=$(cd ${WD}; pwd)
- 
+
 #The user that will run
 RUN_AS=pi
 
 #Clean name of the script to execute
-CLEAN_NAME=$(basename ${WD})
+CLEAN_NAME=TIMELAPSE
  
 #Name of the screen-session
 NAME="$CLEAN_NAME"_AUTO_screen
  
 #executable files in the following paths that are perhaps needed by the script
-PATH=/bin:/usr/bin:/sbin:/usr/sbin
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
  
 #your path to the pogram directory
-DIR=${WD}
+DIR=/home/pi/gphoto2-timelapse
  
 #Description
 DESC="${CLEAN_NAME}"
