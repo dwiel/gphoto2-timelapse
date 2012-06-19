@@ -4,7 +4,11 @@ import ephem
 
 btown = ephem.Observer()
 btown.pressure = 0
+
+# standard horizon found in documentation
 btown.horizon = '-0:34'
+
+# bloomington lat and lon
 btown.lat, btown.lon = '39.170637', '-86.556237'
 
 # NOTE: all datetimes are UTC
@@ -35,7 +39,6 @@ def is_light(dt) :
 
 def is_dark(dt) :
   return not is_light(dt)
-
 
 if __name__ == '__main__' :
   print is_light(datetime.utcnow())
