@@ -18,7 +18,7 @@ import sun
 # the time between photos
 #DELTA = timedelta(seconds = 20)
 DELTA = timedelta(minutes = 5)
-folder = 'photos'
+picture_folder = '/home/pi/gphoto2-timelapse/photos'
 DEBUG = False
 
 def log(message) :
@@ -118,12 +118,12 @@ def take_picture(filename = None) :
     run("gphoto2 --capture-image")
     
     # copy the picture from the camera to local disk
-    run("gphoto2 --get-file=1 --filename=%s/%s" % (folder, filename))
+    run("gphoto2 --get-file=1 --filename=%s/%s" % (picture_folder, filename))
     
     ## delete file off of camera
     #delete_picture()
   else :
-    return run("gphoto2 --capture-image-and-download --filename %s/%s" % (folder, filename))
+    return run("gphoto2 --capture-image-and-download --filename %s/%s" % (picture_folder, filename))
 
 def delete_picture(from_folder = None) :
   log('deleting picture')
@@ -157,6 +157,8 @@ while True :
   if sun.is_light(t) :
     reset_nikon()
     take_picture()
+  else :
+    print "Waiting for the sun to come out"
   
   # remove the picture from camera memory since there isn't much there
   reset_nikon()
