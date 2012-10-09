@@ -1,3 +1,8 @@
+"""
+A script which provides functions to timelapse.py for determining if it is
+currently light out (and if it is worth taking photos right now)
+"""
+
 from datetime import datetime, timedelta
 
 import ephem
@@ -9,6 +14,7 @@ btown.pressure = 0
 btown.horizon = '-0:34'
 
 # bloomington lat and lon
+# you will need to change this to match your location
 btown.lat, btown.lon = '39.170637', '-86.556237'
 
 # NOTE: all datetimes are UTC
@@ -41,6 +47,10 @@ def is_dark(dt) :
   return not is_light(dt)
 
 if __name__ == '__main__' :
+  """
+  basic testing function: will say if it is light out every hour from now
+  untill tomorrow this time
+  """
   print is_light(datetime.utcnow())
   
   for i in range(24) :

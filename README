@@ -21,6 +21,12 @@ Once everything is installed, you need to tweak the script a bit to get it to wo
 python timelapse.py
 python sun.py
 
+There is also an rc script which you can use to start the timelapse script automatically whenever the computer (raspberry pi) is turned on.  To setup this feature run the following commands:
+
+sudo ln ./rc.timelapse /etc/init.d/rc.timelapse
+cd /etc/init.d/
+sudo update-rc.d rc.timelapse defaults
+
 *ADDITIONAL INFORMATION & AUTHOR*
 
 http://dwiel.net/blog/raspberry-pi-timelapse-camera/
