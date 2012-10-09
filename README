@@ -1,0 +1,26 @@
+*2012*
+
+gphoto2-timelapse - dwiel (https://github.com/dwiel)
+
+*DESCRIPTION*
+
+gphoto2-timelapse allows you to create timelapse photography using the Raspberry Pi (http://www.raspberrypi.org/), supported DSLR camera connected via USB (http://gphoto.org/proj/libgphoto2/support.php), and the gphoto2 unix tool (http://www.gphoto.org/).
+
+*Installation*
+
+You will need to install python to run the intervalometer (timelapse) scripts. - http://www.python.org/getit/
+
+You can use the install scripts - gphoto2-install / install
+
+It's a great idea to install gphoto2 from source as the pre-built libraries are generally old. The gphoto2-install script does just this.
+
+*USE*
+
+Once everything is installed, you need to tweak the script a bit to get it to work with different cameras. Once you have the camera specific parameters and functions in place, you can use the python scripts to being taking images.
+
+python timelapse.py
+python sun.py
+
+*ADDITIONAL INFORMATION & AUTHOR*
+
+http://dwiel.net/blog/raspberry-pi-timelapse-camera/
