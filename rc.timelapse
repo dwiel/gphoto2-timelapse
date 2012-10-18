@@ -19,7 +19,7 @@ DIR=/home/pi/gphoto2-timelapse
 DESC="${CLEAN_NAME}"
 
 #Command
-CMD="python timelapse.py"
+CMD="python timelapse.py >> timelapse.log 2>&1"
  
 
 function run_as  ()
