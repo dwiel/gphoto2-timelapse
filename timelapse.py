@@ -20,6 +20,39 @@ import sun
 DELTA = timedelta(minutes = 5)
 picture_folder = '/home/pi/gphoto2-timelapse/photos'
 DEBUG = False
+ignore_sun = True
+
+def parse_int(s) :
+  try :
+    return int(s)
+  except ValueError:
+    return None
+  except TypeError:
+    return None
+
+def get_prefix() :
+  """
+  look at the filenames already in the picture folder and look for files with a prefix.  Find the biggest prefix 
+  and make the new prefix 1 larger.  This is so that even if the clock gets reset (as it does if the raspberrypi
+  looses power), the pictures can still be reassembled in the order that they were taken
+  """
+  
+  import glob
+  filenames = glob.glob(picture_folder+'*.jpg')
+  max_prefix = 0
+  for filename in filenames :
+    parts = filenames.split('_')
+    if len(parts) > 1 :
+      possible_prefix = parse_int(parts[0])
+      if possible_prefix > max_prefix
+        max_prefix = possible_prefix
+  
+  max_prefix += 1
+  return '%04d' % max_prefix
+
+prefix = get_prefix()
+# or if you prefer no prefix, uncomment the following line
+# prefix = ''
 
 def log(message) :
   print datetime.utcnow(), message
@@ -42,10 +75,16 @@ def run(cmd) :
     ret = p.returncode
     
     if stdout.strip() != '' or DEBUG :
-      print 'stdout', stdout
+      if stdout[-1] == '\n' :
+        stdout = stdout[:-1]
+      print 'stdout'
+      print '>> '+stdout.replace('\n', '\n>> ')
       print 'end stdout'
     if stderr.strip() != '' or DEBUG :
-      print 'stderr', stderr
+      if stderr[-1] == '\n' :
+        stderr = stderr[:-1]
+      print 'stderr'
+      print '>> '+stderr.replace('\n', '\n>> ')
       print 'end stderr'
     if DEBUG :
       print 'ret', ret
@@ -105,7 +144,7 @@ def list_files() :
 workaround = True
 def take_picture(filename = None) :
   if not filename :
-    filename = datetime.utcnow().strftime("%Y%m%d-%H%M%S.jpg")
+    filename = prefix + '_' + datetime.utcnow().strftime("%Y%m%d-%H%M%S.jpg")
   
   log('taking picture')
   if workaround :
@@ -154,13 +193,15 @@ while True :
   t = datetime.utcnow()
   
   # only take pictures when it is light out
-  if sun.is_light(t) :
+  if sun.is_light(t) or ignore_sun:
     reset_nikon()
     take_picture()
   else :
-    print "Waiting for the sun to come out"
+    print "Waiting for the sun to come out"  
   
   # remove the picture from camera memory since there isn't much there
+  # doing this even if we're waiting for the sun, hoping that it will keep
+  # the camera awake
   reset_nikon()
   delete_picture()
   
