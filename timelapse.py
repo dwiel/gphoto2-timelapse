@@ -44,7 +44,7 @@ def get_prefix() :
     parts = filenames.split('_')
     if len(parts) > 1 :
       possible_prefix = parse_int(parts[0])
-      if possible_prefix > max_prefix
+      if possible_prefix > max_prefix :
         max_prefix = possible_prefix
   
   max_prefix += 1
