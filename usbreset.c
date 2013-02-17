@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 	int rc;
 
 	if (argc != 2) {
+		fprintf(stderr, "Usage: usbreset device-filename\n");
 		return 1;
 	}
 	filename = argv[1];
@@ -31,8 +32,8 @@ int main(int argc, char **argv)
 		perror("Error in ioctl");
 		return 1;
 	}
-	
+
+
 	close(fd);
 	return 0;
 }
-
