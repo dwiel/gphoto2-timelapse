@@ -16,7 +16,7 @@ It's a great idea to install gphoto2 from source as the pre-built libraries are 
 
 *USE*
 
-Once everything is installed, you need to tweak the script a bit to get it to work with different cameras. Once you have the camera specific parameters and functions in place, you can use the python scripts to being taking images.
+Once everything is installed, you need to tweak the script a bit to get it to work with different cameras. Once you have the camera specific parameters and functions in place, you can use the python scripts to begin taking images.
 
 python timelapse.py
 python sun.py
