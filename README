@@ -8,11 +8,12 @@ gphoto2-timelapse allows you to create timelapse photography using the Raspberry
 
 *Installation*
 
-You will need to install python to run the intervalometer (timelapse) scripts. - http://www.python.org/getit/
+1) install python (http://www.python.org/getit/), on the raspberry pi you should already have python installed.  If you don't, run:
+    sudo apt-get install python
+2) ./gphoto2-install if you don't already have gphoto2 installed
+3) ./install
 
-You can use the install scripts - gphoto2-install / install
-
-It's a great idea to install gphoto2 from source as the pre-built libraries are generally old. The gphoto2-install script does just this.
+gphoto2-install will build and install gphoto2 from source.  This was helpful for me since the libraries in the public apt-get repositories are old and don't support as many cameras.
 
 *USE*
 
