@@ -2,6 +2,8 @@
 
 gphoto2-timelapse - dwiel (https://github.com/dwiel)
 
+See here for a much improved version: https://github.com/jflalonde/gphoto2-timelapse
+
 *DESCRIPTION*
 
 gphoto2-timelapse allows you to create timelapse photography using the Raspberry Pi (http://www.raspberrypi.org/), supported DSLR camera connected via USB (http://gphoto.org/proj/libgphoto2/support.php), and the gphoto2 unix tool (http://www.gphoto.org/).
